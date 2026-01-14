@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data files (don't commit large files)
+data/raw/**/*.mp4
+data/raw/**/*.avi
+data/processed/**/*.mp4
+data/results/**
+experiments/**
+*.h5
+*.hdf5
+*.pkl
+*.npy
+
+# Models
+models/*.pth
+models/*.pt
+models/*.onnx
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Configuration (if contains sensitive info)
+# configs/local_config.yaml
+
+# Keep structure files
+!data/README.md
+!experiments/README.md
+!models/README.md
