@@ -1,0 +1,92 @@
+# Default Configuration for Motion Segmentation Pipeline
+
+project:
+  name: "motion_segmentation"
+  version: "0.1.0"
+  phase: "phase2"
+
+input:
+  video_path: "data/raw/sample_video.mp4"
+  fps: null  # Auto-detect if null
+  start_frame: 0
+  end_frame: null  # Process entire video if null
+  resize: null  # [width, height] or null for original size
+
+segmentation:
+  method: "mog2"  # Options: mog2, optical_flow, frame_diff
+  
+  mog2:
+    history: 500
+    var_threshold: 16
+    detect_shadows: true
+    learning_rate: -1  # Auto
+  
+  optical_flow:
+    method: "farneback"  # Options: lucas_kanade, farneback
+    pyr_scale: 0.5
+    levels: 3
+    winsize: 15
+    iterations: 3
+    poly_n: 5
+    poly_sigma: 1.2
+  
+  frame_diff:
+    threshold: 25
+    kernel_size: 5
+    blur_size: 5
+
+tracking:
+  min_region_area: 100  # pixels
+  iou_threshold: 0.3
+  max_disappeared: 5  # frames before region considered gone
+
+metrics:
+  calculate_intensity: true
+  calculate_frequency: false  # Future: FFT analysis
+  calculate_duration: true
+  smoothing_window: 5  # frames
+
+visualization:
+  create_mask_video: true
+  create_overlay_video: true
+  create_plots: true
+  plot_types:
+    - "timeseries"
+    - "heatmap"
+    - "region_summary"
+  
+  video:
+    codec: "mp4v"
+    fps: 30  # Output video fps
+    show_labels: true
+    show_bboxes: true
+  
+  plot:
+    dpi: 150
+    style: "seaborn-v0_8"
+    figsize: [12, 6]
+
+output:
+  base_dir: "data/results"
+  create_subdirs: true
+  save_masks: true
+  save_metrics: true
+  save_plots: true
+  save_report: true
+  
+  formats:
+    masks: "npy"  # Options: npy, png_sequence
+    metrics: "csv"  # Options: csv, json
+    report: "markdown"  # Options: markdown, pdf
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  save_to_file: true
+  log_dir: "logs"
+
+performance:
+  use_gpu: false  # Future: GPU acceleration
+  num_workers: 4
+  batch_size: 1
+  max_memory_gb: 8
